@@ -1,5 +1,3 @@
-'use strict';
-
 const app = require('express')();
 const tasksContainer = require('./tasks.json');
 
@@ -26,23 +24,24 @@ app.get('/tasks', (req, res) => {
 app.get('/task/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
 
-  if (!Number.isNaN(id)) {
-    const task = tasks.Container.find((item) => item.id === id);
-
-    if (task !== null) {
-      return res.status(200).json({
-        task,
-      });
-    } else {
-      return res.status(404).json({
-        message: 'Not found.',
-      });
-    }
-  } else {
+  if (Number.isNaN(id)) {
     return res.status(400).json({
       message: 'Bad request.',
     });
+  } 
+  
+  const task = tasks.Container.find((item) => item.id === id);
+
+  if (task === null) {
+    return res.status(404).json({
+      message: 'Not found.',
+    });
   }
+
+  return res.status(200).json({
+    task,
+  });
+  
 });
 
 /**
@@ -60,23 +59,24 @@ app.get('/task/:id', (req, res) => {
 app.put('/task/update/:id/:title/:description', (req, res) => {
   const id = parseInt(req.params.id, 10);
 
-  if (!Number.isNaN(id)) {
-    const task = tasksContainer.tasks.find(item => item.id === id);
-
-    if (task !== null) {
-      task.title = req.params.title;
-      task.description = req.params.description;
-      return res.status(204);
-    } else {
-      return res.status(404).json({
-        message: 'Not found',
-      });
-    }
-  } else {
+  if (Number.isNaN(id)) {
     return res.status(400).json({
-      message: 'Bad request',
+      message: 'Bad request.',
     });
-  }
+  } 
+
+  const task = tasksContainer.tasks.find(item => item.id === id);
+
+  if (task === null) {
+    return res.status(404).json({
+      message: 'Not found.',
+    });
+  }   
+
+  task.title = req.params.title;
+  task.description = req.params.description;
+  return res.status(204);
+ 
 });
 
 /**
@@ -115,27 +115,29 @@ app.post('/task/create/:title/:description', (req, res) => {
 app.delete('/task/delete/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
 
-  if (!Number.isNaN(id)) {
-    const task = tasksContainer.tasks.find(item => item.id === id);
-  
-    if (task !== null) {
-      const taskIndex = tasksContainer.tasks;
-      tasksContainer.tasks.splice(taskIndex, 1);
-      return res.status(200).json({
-        message: 'Updated successfully',
-      });
-    } else {
-      return es.status(404).json({
-        message: 'Not found',
-      });
-    }
-  } else {
+  if (Number.isNaN(id)) {
     return res.status(400).json({
-      message: 'Bad request',
+      message: 'Bad request.',
     });
-  }
+  } 
+
+  const task = tasksContainer.tasks.find(item => item.id === id);
+
+  if (task === null) {
+    return res.status(404).json({
+      message: 'Not found.',
+    });
+  }   
+
+  const taskIndex = tasksContainer.tasks;
+  tasksContainer.tasks.splice(taskIndex, 1);
+  return res.status(200).json({
+    message: 'Updated successfully',
+  });
 });
 
-app.listen(9001, () => {
-  process.stdout.write('the server is available on http://localhost:9001/\n');
+app.set("port", process.env.PORT || 9001);
+
+app.listen(app.get("port"), () => {
+  process.stdout.write(`The server is up and running on port:${app.get("port")}\n`);  
 });
