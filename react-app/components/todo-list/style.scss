@@ -1,0 +1,42 @@
+.list_container {
+	width: 500px;	
+	margin-top:10px;
+}
+
+@media screen and (max-device-width: 400px) { 
+	.list_container {
+		width: 97.5%;			
+	}
+}
+
+@media screen and (min-device-width: 400px) and (max-device-width: 736px) { 
+	.list_container {
+		width: 90%;			
+	}
+}
+
+.list_table {
+	background-color: white;
+	width:100%;	
+}
+
+.list_card_title{
+	span{
+		font-size: 14px;
+	}
+}
+
+.list_task_date{
+	color: rgba(134, 142, 150, 0.74);
+	font-size: 14px;
+}
+
+.list_card_controls{
+	margin-left:4px;
+	span {
+		margin-left:12px;
+		font-size: 14px;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}

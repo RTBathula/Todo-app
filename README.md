@@ -1,38 +1,75 @@
-# Travix test
+# EBI Search
+A Search Engine for finding transcripts with the given amino acid at the specified position.
 
-Travix Front-End Tech Interview Test 
+# Demo(hosted in heroku)
+http://ebisearch.herokuapp.com
 
-# Introduction
+# My views and strategies
+## Frotend
+Used ES6,Webpack,Reactjs and Reduxjs for this project. On Using Reduxjs, avoided mutable updates to the data. Also made a good minimalist UI design. Used CSS3 Flexbox module like sticky footer and for other usage.
+Throughout the project, respected errors (i.e properly showing) and showing spinners wherever is necessary. 
 
-The aim of the test is to develop a mini-application for managing TODO tasks.
+## Search techniques
+Search is done by simply checking the existence of given amino acid letter at given position by using javascript's `slice` method.
+Although for real production usage, want to explore more on *Elastic search* and on the data structures like bloom filter etc.
 
-Using your application we must be able to create, modify and delete a task.
+## Testing the app
+For Demo purpose, just wrote simple search-components-defined tests by using Reactjs' test framework called [Jest](https://facebook.github.io/jest/) and used Airbnb's [Enzyme](http://airbnb.io/enzyme) lib for Unit testing.
+Can test by `npm test`.
 
-A really simple server has been implemented with Express. It offers the minimum of expected functionalities (get the list of tasks, update a task, delete a task, save a task).
+For serious deployment tests, can use Jest,Enzyme and Selenium WebDriver for end-to-end testing the application.
 
-However this server is not perfect. It could be improved and tested as well.
+## Test Automation
+As I am a DevOps engineer for my current company, maintaining Jenkins for Continous Integration and Deployment.
+Using the following workflow for best practice.
 
-So your mission is to develop the front-end from scratch using a famous front-end framework.
+![alt](http://s3-sa-east-1.amazonaws.com/todovapersonal/gitflow2.png)
 
-We are also expecting from you a usable, responsive UI.
 
-# Process
+Recently I am exploring on Netflix's Spinnaker-> [https://www.spinnaker.io](https://www.spinnaker.io) for multi-cloud continuous delivery platform. Sweetly named "Land of a 1000 Builds". These are the things and my views for testing and automating which I want to use for the app to make SMOOTH and SOLID deployments.
 
-Fork the repository into your account. Once your code is ready open a pull-request on this repository and we will review it.
+## Containerization and Orchestration
+I am using DOCKER for building the images and using KUBERNETES (on GCE/GKE) for Orchestration of containers.
+You can check for the Dockerfile which I created in root directory.
 
-# Requirements
+# Getting Started to run locally
 
-* React 14+
-* Redux or Flux or Frint or whateverelse with a one-way data flow
-* SASS or LESS
-* Must be responsive
-* We have big tasks files for testing the application (very huge)
+Fork and clone the repository. Install dependencies with:
 
-# Bonus
+``npm install``
 
-* unit-tests for the UI 
-* integration-test (one (or more) just in order to show that you know what is it (: )
-* evolution - unit-tests for the server
-* dynamic-ui (web-sockets...?)
-* using the `made in Travix` technologies
-* ... Impress us !
+# Run Server
+After completing all above steps run your node.js server
+```
+npm start
+```
+# Now open 
+http://localhost:1446
+
+# Getting Started by docker
+Run following commands from the root of the directory to pick up Dockerfile
+
+```
+docker build -t <tagname> .
+docker run -d -p 1446:1446 <tagname>
+```
+which runs a nodejs server on port on 1446. End point is http://<docker-machine-ip>:1446
+
+# Usage
+#### General search example: Input the following respectively in inputs
+##### BRAF
+##### 6
+##### G
+
+#### HGSV string search example
+##### "BRCA2.p:G4S"
+
+# Test search components defined
+```
+npm test
+```
+
+## Love :heart: to hear feedback from you
+RT Bathula-weirdo,coffee lover
+battu.network@gmail.com
+

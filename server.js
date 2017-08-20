@@ -1,5 +1,22 @@
-const app = require('express')();
+const express = require('express');
 const tasksContainer = require('./tasks.json');
+const app = express();
+
+app.use(express.static(__dirname))
+
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack')
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
+  const config = require('./webpack.config.js')
+  const compiler = webpack(config)
+
+  app.use(webpackHotMiddleware(compiler))
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }))
+}
 
 /**
  * GET /tasks
@@ -135,6 +152,11 @@ app.delete('/task/delete/:id', (req, res) => {
     message: 'Updated successfully',
   });
 });
+
+//Init with index.html
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + '/index.html');  
+})
 
 app.set("port", process.env.PORT || 9001);
 

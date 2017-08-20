@@ -1,0 +1,49 @@
+.create_container{
+	width:300px;
+	height:300px;	
+	padding: 15px;
+	background-color:white;
+
+	.page_title{
+		font-size: 18px;
+		font-weight: 500;
+	}
+
+	.input_suit{
+		margin-top: 14px;
+
+		.input_label{
+			font-size: 14px;
+			font-weight: 500;
+		}
+
+		.input_txt{
+			border-bottom:1px solid gray;
+			width:100%;
+			padding-left:2px;
+			font-size:14px;
+		}
+
+		.input_error{
+			margin-top:1px;
+			color:red;
+		}
+	}
+
+	.button_suit{
+		margin-top:20px;
+		height: 26px;
+		font-size: 14px;	
+		.button_cancel{
+			height:100%;
+			width: 70px;
+		}
+		.button_create{
+			height:100%;
+			width: 90px;
+			margin-left: 12px;
+			background-color: green;
+			color: white;
+		}
+	}
+}
