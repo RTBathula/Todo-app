@@ -1,0 +1,20 @@
+.input_suit{
+	margin-top: 14px;
+
+	.input_label{
+		font-size: 14px;
+		font-weight: 500;
+	}
+
+	.input_txt{
+		border-bottom:1px solid gray;
+		width:100%;
+		padding-left:2px;
+		font-size:14px;
+	}
+
+	.input_error{
+		margin-top:1px;
+		color:red;
+	}
+}

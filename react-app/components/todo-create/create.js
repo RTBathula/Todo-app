@@ -1,21 +1,59 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { browserHistory } from 'react-router'
+import {validateForm} from '../../helpers/validate-form'
 
 //Components
 import Header from '../header/header'
 import Footer from '../footer/footer'
+import Errorstrip from '../error-strip/error'
+import TaskForm from '../task-form/form'
 
 class App extends Component { 
 
     constructor(props) {
-        super(props)           
+      super(props) 
+      this.state = { 
+        fieldObj: {    
+          title: "",
+          description: ""
+        },
+        fieldValidators: {
+          titleValidateMsg: "",
+          descriptionValidateMsg: ""
+        }      
+      }          
     }
 
     componentWillMount() {
-        if(this.props.todo.isShowCreatebtn){
-          this.props.todoActions.toggleCreateBtn(false)
-        }        
+      if(this.props.todo.isShowCreatebtn){
+        this.props.todoActions.toggleCreateBtn(false)
+      }        
+    }
+
+    changeInputData = (newVal,fieldName) => {
+      this.setState({  
+         ...this.state,       
+        fieldObj: {
+           ...this.state.fieldObj,
+          [fieldName] : newVal
+        }
+      })  
+    }
+
+    create = () => { 
+      const response = validateForm(this.state.fieldObj)  
+      this.setState({        
+        fieldValidators: {
+         titleValidateMsg : response.titleValidateMsg,
+         descriptionValidateMsg : response.descriptionValidateMsg,
+        }
+      })
+
+      if(response.isValid){       
+        this.props.todoActions.toggleIsCreatingTask(true)
+        this.props.todoActions.createNewTaskAsync(this.state.fieldObj.title,this.state.fieldObj.description)
+      }      
     }
    
     render() {
@@ -24,38 +62,43 @@ class App extends Component {
                 {/*Header*/}             
                 <Header todo={this.props.todo}/>	
                 
-                <div className="screenfull flex-column-center elasticContent">  
-                    <div className="create_container">                         
-                        <p className="page_title">Create new task</p>
+                <div className="screenfull flex-column-center elasticContent">    
+                  <div className="form_container card-bgshadow">
+                      {/*Error-strip*/} 
+                      {this.props.todo.createTaskError &&
+                        <Errorstrip errorMsg={this.props.todo.createTaskError} />
+                      }                      
 
-                        <div className="input_suit">
-                            <p className="input_label">Title</p>
-                            <div>
-                                <input type="text" className="default-inputfield input_txt" placeholder="Enter task title" />
-                            </div>
-                            <p className="input_error">Title</p>
-                        </div> 
+                      <div className="create_container">                         
 
-                        <div className="input_suit">
-                            <p className="input_label">Description</p>
-                            <div>
-                                <input type="text" className="default-inputfield input_txt" placeholder="Enter task description" />
-                            </div>
-                            <p className="input_error">Title</p>
-                        </div> 
+                          <p className="page_title">Create new task</p>
 
-                        <div className="button_suit">
+                          {/*Task-form*/} 
+                          <TaskForm fieldObj = {this.state.fieldObj} fieldValidators = {this.state.fieldValidators} changeInputData = {(newVal,fieldName) => this.changeInputData(newVal,fieldName)}/> 
+
+                          <div className="button_suit">
                             <button  onClick={() =>  browserHistory.push('/') } className="default-inputfield button_cancel">                             
                               Cancel
-                           </button>
-                           <button  onClick={() =>  browserHistory.push('/') } className="default-inputfield button_create"> 
-                             <i className="fa fa-plus"></i>&nbsp;
-                              Create
-                           </button>
-                        </div>                                           
-                    </div>            
+                            </button>
+
+                            {!this.props.todo.isCreatingTask && 
+                              <button  onClick={this.create} className="default-inputfield button_create"> 
+                               <i className="fa fa-floppy-o"></i>&nbsp;
+                                Create
+                              </button>
+                            }
+
+                            {this.props.todo.isCreatingTask && 
+                              <button  className="default-inputfield button_create"> 
+                               <i className="fa fa-circle-o-notch fa-spin fa-fw"></i>&nbsp;
+                                Creating..
+                              </button>
+                            }
+                          </div>                                           
+                      </div> 
+                  </div>            
                 </div>
-                  
+
                 {/*Footer*/}                  
                 <Footer/>               
             </div>    	  	

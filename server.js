@@ -23,8 +23,8 @@ if (process.env.NODE_ENV !== 'production') {
  * 
  * Return the list of tasks with status code 200.
  */
-app.get('/tasks', (req, res) => {
-  return res.status(200).json(tasksContainer);
+app.get('/tasks', (req, res) => {  
+  return res.status(200).json(tasksContainer.tasks);
 });
 
 /**
@@ -47,17 +47,15 @@ app.get('/task/:id', (req, res) => {
     });
   } 
   
-  const task = tasks.Container.find((item) => item.id === id);
+  const task = tasksContainer.tasks.find((item) => item.id === id);
 
-  if (task === null) {
+  if (!task) {
     return res.status(404).json({
       message: 'Not found.',
     });
   }
 
-  return res.status(200).json({
-    task,
-  });
+  return res.status(200).json(task);
   
 });
 
@@ -84,7 +82,7 @@ app.put('/task/update/:id/:title/:description', (req, res) => {
 
   const task = tasksContainer.tasks.find(item => item.id === id);
 
-  if (task === null) {
+  if (!task) {
     return res.status(404).json({
       message: 'Not found.',
     });
@@ -92,7 +90,9 @@ app.put('/task/update/:id/:title/:description', (req, res) => {
 
   task.title = req.params.title;
   task.description = req.params.description;
-  return res.status(204);
+  return res.status(204).json({
+    message: 'Successfully updated',
+  });
  
 });
 
@@ -110,13 +110,12 @@ app.post('/task/create/:title/:description', (req, res) => {
     id: tasksContainer.tasks.length,
     title: req.params.title,
     description: req.params.description,
+    createdAt: new Date().getTime(),
   };
 
   tasksContainer.tasks.push(task);
 
-  return res.status(201).json({
-    message: 'Resource created',
-  });
+  return res.status(201).json(task);
 });
 
 /**

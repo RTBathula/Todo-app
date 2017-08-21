@@ -11,6 +11,7 @@ import "./index.scss";
 //Custom
 import Todolist from './containers/todo-list';
 import Todocreate from './containers/todo-create';
+import Todoedit from './containers/todo-edit';
 
 
 const history = syncHistoryWithStore(browserHistory, store)
@@ -19,7 +20,8 @@ render(
 	<Provider store={store}>
 		<Router history = {history}>					
 			<Route path="/" component={Todolist}/>	
-			<Route path="/create" component={Todocreate}/>			
+			<Route path="/create" component={Todocreate}/>
+			<Route path="/edit/:taskId" component={Todoedit}/>			
 		</Router>				
 	</Provider>,
 document.getElementById('react-mount')

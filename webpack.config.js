@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   devtool: 'eval',
   entry: [     
-    './react-app/main.js'
+    'babel-polyfill','./react-app/main.js'
   ],
   output: {
     path: __dirname,
