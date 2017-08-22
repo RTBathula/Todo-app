@@ -40,7 +40,7 @@ export const createNewTask = (title, description) => {
     axios(payload)
     .then(response => {            
       if(response.status !== 200 && response.status !== 201){      
-        return reject("Unable to crrate new tasks")
+        return reject("Unable to create new tasks")
       }
       if(response.status === 201){          
         resolve(response.data)
