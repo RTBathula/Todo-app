@@ -37,15 +37,6 @@ npm start
 # Now open 
 http://localhost:9001
 
-# Getting Started by docker
-Run following commands from the root of the directory to pick up Dockerfile
-
-```
-docker build -t <tagname> .
-docker run -d -p 9001:9001 <tagname>
-```
-which runs a nodejs server on port on 9001. End point is http://<docker-machine-ip>:9001
-
 ## Love :heart: to hear feedback from you
 RT Bathula-weirdo,coffee lover
 battu.network@gmail.com

@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   devtool: 'source-map',
   entry: [    
-    'babel-polyfill','./react-app/main.js'
+    'babel-polyfill','./app/main.js'
   ],
   output: {
     path:__dirname,
@@ -26,8 +26,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     })
-  ],  
- 
+  ],   
   module: {
     loaders: [
       { test: /\.jsx$|\.js$/,
@@ -62,7 +61,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.es6', '.jsx'],
     root: [
-      path.resolve('./react-app')
+      path.resolve('./app')
     ]
   },
 }
