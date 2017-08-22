@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   devtool: 'source-map',
   entry: [    
-    './react-app/main.js'
+    'babel-polyfill','./react-app/main.js'
   ],
   output: {
     path:__dirname,
@@ -39,18 +39,8 @@ module.exports = {
           presets: ["react", "es2015","stage-2"]
         } 
       },{
-        test: /\.css$/,
-          loader: combineLoaders([
-            {
-              loader: 'style-loader'
-            }, {
-              loader: 'css-loader',
-              query: {
-                modules: true,
-                localIdentName: '[name]__[local]___[hash:base64:5]'
-              }
-            }
-          ])
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass']
       },     
       {
         test: /\.(jpe?g|png|gif|svg)$/i,

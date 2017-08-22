@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   devtool: 'eval',
   entry: [     
-    'babel-polyfill','./react-app/main.js'
+    'babel-polyfill','./app/main.js'
   ],
   output: {
     path: __dirname,
@@ -62,7 +62,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.es6', '.jsx'],
     root: [
-      path.resolve('./react-app')
+      path.resolve('./app')
     ]
   },
   devServer: {
